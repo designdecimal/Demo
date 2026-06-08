@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Morning Love 💖</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 40%, #f6e0b5 80%);
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    /* Morning Sun */
+    .sun {
+      position: absolute;
+      top: 15%;
+      left: 20%;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #fff9c4 0%, #fdd835 50%, #f9a825 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 80px #fdd835, 0 0 150px #fff176;
+      animation: sunRise 2s ease-out forwards;
+      z-index: 1;
+    }
+
+    @keyframes sunRise {
+      0% { top: 70%; opacity: 0.3; transform: scale(0.8); }
+      100% { top: 15%; opacity: 1; transform: scale(1); }
+    }
+
+    /* Soft Clouds */
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.9;
+      z-index: 2;
+      animation: floatCloud 20s infinite alternate ease-in-out;
+    }
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+    .cloud1 {
+      width: 140px; height: 60px;
+      top: 25%; left: -10%;
+      border-radius: 50px;
+      opacity: 0.8;
+    }
+    .cloud1::before {
+      width: 80px; height: 80px;
+      top: -40px; left: 15px;
+    }
+    .cloud1::after {
+      width: 100px; height: 70px;
+      top: -20px; right: 10px;
+    }
+    .cloud2 {
+      width: 100px; height: 45px;
+      top: 20%; right: 5%;
+      border-radius: 50px;
+      opacity: 0.7;
+      animation-duration: 25s;
+    }
+    .cloud2::before {
+      width: 60px; height: 60px;
+      top: -30px; left: 10px;
+    }
+    .cloud2::after {
+      width: 80px; height: 50px;
+      top: -15px; right: 8px;
+    }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(30px); }
+    }
+
+    /* Birds (simple v shapes) */
+    .bird {
+      position: absolute;
+      font-size: 26px;
+      color: #555;
+      opacity: 0.6;
+      animation: fly 15s infinite linear;
+      z-index: 3;
+    }
+    .bird1 { top: 12%; left: -30px; animation-duration: 14s; }
+    .bird2 { top: 18%; left: -60px; animation-duration: 16s; }
+    .bird3 { top: 22%; left: -90px; animation-duration: 18s; }
+
+    @keyframes fly {
+      0% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(50vw) translateY(-20px); }
+      100% { transform: translateX(110vw) translateY(10px); }
+    }
+
+    /* Grass/Hills at bottom */
+    .ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(180deg, #aed581 0%, #7cb342 100%);
+      border-radius: 50% 50% 0 0;
+      z-index: 4;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    /* The button */
+    .open-btn {
+      padding: 14px 45px;
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #ff6f91, #ff9671);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(255,105,135,0.5);
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+      z-index: 10;
+      margin-bottom: 40px;
+      animation: pulse 2s infinite;
+    }
+    .open-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(255,105,135,0.7);
+    }
+    .open-btn:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,105,135,0.6); }
+      70% { box-shadow: 0 0 0 20px rgba(255,105,135,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,105,135,0); }
+    }
+
+    /* Good Morning Text (hidden initially) */
+    .morning-msg {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 42px;
+      color: #d6336c;
+      font-weight: bold;
+      text-shadow: 2px 2px 10px white, 0 0 30px #ffd1dc;
+      z-index: 15;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .morning-msg.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    .morning-sub {
+      position: absolute;
+      top: 42%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 22px;
+      color: #c2185b;
+      z-index: 15;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.3s;
+      text-shadow: 1px 1px 5px white;
+      text-align: center;
+    }
+    .morning-sub.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    /* Hearts Rain container */
+    .hearts-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .heart-drop {
+      position: absolute;
+      top: -60px;
+      font-size: 28px;
+      color: #ff4081;
+      animation: rainFall linear forwards;
+    }
+
+    @keyframes rainFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0.6;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .morning-msg { font-size: 32px; }
+      .morning-sub { font-size: 18px; top: 45%; }
+      .sun { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Sun and sky already in background -->
+
+    <!-- Clouds -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <!-- Birds -->
+    <div class="bird bird1">🕊️</div>
+    <div class="bird bird2">🕊️</div>
+    <div class="bird bird3">🕊️</div>
+
+    <!-- Sun -->
+    <div class="sun"></div>
+
+    <!-- Ground -->
+    <div class="ground"></div>
+
+    <!-- Button -->
+    <button class="open-btn" id="openButton" onclick="openMorning()">🌅 Open</button>
+
+    <!-- Good Morning Text (hidden) -->
+    <div class="morning-msg" id="morningMsg">☀️ Good Morning Munni Babe! ☀️</div>
+    <div class="morning-sub" id="morningSub">Preety Princess Munni Sweetheart💕</div>
+
+    <!-- Hearts Rain Container -->
+    <div class="hearts-rain" id="heartsRain"></div>
+  </div>
+
+  <script>
+    function openMorning() {
+      // Disable button
+      const btn = document.getElementById('openButton');
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      btn.style.cursor = 'not-allowed';
+      btn.textContent = '✨ Enjoy ✨';
+
+      // 1. Show Good Morning messages
+      setTimeout(() => {
+        document.getElementById('morningMsg').classList.add('show');
+        document.getElementById('morningSub').classList.add('show');
+      }, 200);
+
+      // 2. Start hearts rain
+      startHeartsRain();
+
+      // Optional: hide button after a moment
+      setTimeout(() => {
+        btn.style.display = 'none';
+      }, 1000);
+    }
+
+    function startHeartsRain() {
+      const rainContainer = document.getElementById('heartsRain');
+      const heartEmojis = ['❤️', '💖', '💕', '💗', '💘', '💝', '💞', '♥️', '🌸', '🌷'];
+
+      // Create hearts continuously for a few seconds
+      const totalHearts = 90;
+      for (let i = 0; i < totalHearts; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('span');
+          heart.className = 'heart-drop';
+          heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+          heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+          heart.style.opacity = Math.random() * 0.8 + 0.2;
+          rainContainer.appendChild(heart);
+
+          // Remove after animation ends
+          setTimeout(() => heart.remove(), 4000);
+        }, i * 60);
+      }
+    }
+  </script>
+</body>
+</html>
